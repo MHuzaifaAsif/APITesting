@@ -1,19 +1,34 @@
-import { getAllPosts,getPostById } from "../pages/postAPIcall";
+import { getallPost,getpostById,getallComment,getcommentById } from "../pages/postAPIcall";
 
 describe('JSONPlaceholder /posts API Testing', () => {
 
-  it('TC01 - GET all posts', () => {
-    getAllPosts().then((response) => {
+  it('GET all posts', () => {
+    getallPost().then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).to.be.an('array');
       expect(response.body.length).to.be.greaterThan(0);
     });
   });
 
-  it('TC02 - GET single post by ID', () => {
-    getPostById(1).then((response) => {
+  it('GET single post by ID', () => {
+    getpostById(1).then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).to.have.property('id', 1);
     });
   });
+
+  it('GET all comments', () => {
+    getallComment().then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.be.an('array');
+    });
+  });
+
+  it('GET comment by ID', () => {
+    getcommentById(3).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property('id', 3);
+    });
+  });
+
 })
