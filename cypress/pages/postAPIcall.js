@@ -12,3 +12,24 @@ export const getallComment = (id) =>
 export const getcommentById = (id) => {
   return cy.request(`/comments/${id}`);
 };
+export const createPost = (postbody) => {
+  return cy.request({
+    method: 'POST',
+    url: '/posts',
+    body: postbody,
+  });
+};
+export const updatePost = (id, postbody) => {
+  return cy.request({
+    method: 'PUT',
+    url: `/posts/${id}`,
+    body: postbody,
+  });
+};
+
+export const deletePost = (id) => {
+  return cy.request({
+    method: 'DELETE',
+    url: `/posts/${id}`,
+  });
+}
