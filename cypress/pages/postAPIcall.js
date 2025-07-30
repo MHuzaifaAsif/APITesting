@@ -5,6 +5,12 @@ export const getallPost = () => {
 export const getpostById = (id) => {
   return cy.request(`/posts/${id}`);
 };
+export const getpostInvalidId = (id) => {
+  return cy.request({
+    url: `/posts/${id}`,
+    failOnStatusCode: false
+  });
+};
 export const getallComment = (id) =>
 {
     return cy.request('/comments');
@@ -19,6 +25,7 @@ export const createPost = (postbody) => {
     body: postbody,
   });
 };
+
 export const updatePost = (id, postbody) => {
   return cy.request({
     method: 'PUT',

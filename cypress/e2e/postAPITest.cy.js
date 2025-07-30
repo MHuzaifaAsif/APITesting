@@ -1,8 +1,8 @@
-import { getallPost,getpostById,getallComment,getcommentById,createPost,updatePost,deletePost } from "../pages/postAPIcall";
+import { getallPost,getpostById,getpostInvalidId,getallComment,getcommentById,createPost,updatePost,deletePost } from "../pages/postAPIcall";
 
 describe('JSONPlaceholder /posts API Testing', () => {
 
-  it('GET all posts', () => {
+  it('get all posts', () => {
     getallPost().then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).to.be.an('array');
@@ -10,28 +10,33 @@ describe('JSONPlaceholder /posts API Testing', () => {
     });
   });
 
-  it('GET single post by ID', () => {
+  it('get single post by ID', () => {
     getpostById(1).then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).to.have.property('id', 1);
     });
   });
+  it('get single post by invalid ID', () => {
+    getpostInvalidId(3333).then((response) => {
+      expect(response.status).to.eq(404);
+    });
+  });
 
-  it('GET all comments', () => {
+  it('get all comments', () => {
     getallComment().then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).to.be.an('array');
     });
   });
 
-  it('GET comment by ID', () => {
+  it('get comment by ID', () => {
     getcommentById(3).then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).to.have.property('id', 3);
     });
   });
 
-  it('POST create a new post', () => {
+  it('create a new post', () => {
     const newpost = {
       title: 'New Post',
       body: 'Post ad by huzaifa',
@@ -43,8 +48,12 @@ describe('JSONPlaceholder /posts API Testing', () => {
     });
   });
 
-
-  it('PUT update post', () => {
+  it('create post with empty body', () => {
+    createPost({}).then((response) => {
+      expect(response.status).to.eq(201);
+    }); 
+  });
+  it('update post', () => {
     const updatedPost = {
       id: 2,
       title: 'New',
